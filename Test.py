@@ -1,6 +1,8 @@
-from State import State
 from BackwardSearch import backward_search
+from State import State
 from tireproblem import get_actions
+
+
 def main():
     print("Getting the set of all actions...")
     actions = get_actions()

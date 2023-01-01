@@ -1,4 +1,6 @@
 from State import State
+
+
 class Action:
     def __init__(self, name, positive_preconditions, negative_preconditions, add_list, delete_list):
         self.name = name
@@ -8,21 +10,22 @@ class Action:
         self.delete_list = delete_list
 
     def regress(self, state: State):
-        #hazf effect + precondition haye hazf shode ro ezafe mikonim ta state ghablio bede (parent) 
-        #state migire -> tori updatesh mikonim ke beshe state ghabli
+        #write your code
         for add in self.add_list:
             if add in state.positive_literals:
                 state.positive_literals.remove(add)
-        state.positive_literals = list(set(state.positive_literals) | set(self.positive_preconditions))
-        state.positive_literals =  list(set(state.positive_literals))
-        for dell in self.delete_list:
-            if dell in state.negative_literals:
-                state.negative_literals.remove(dell)
-
-        state.negative_literals = list(set(state.negative_literals) | set(self.negative_preconditions))
-        state.negative_literals =  list(set(state.negative_literals))
-        state.action = self
-        return
+        
+        for pos in self.positive_preconditions:
+            if pos not in state.positive_literals:
+                state.positive_literals.append(pos)
+        
+        for delete in self.delete_list:
+            if delete in state.negative_literals:
+                state.negative_literals.remove(delete)
+        
+        for neg in self.negative_preconditions:
+            if neg not in state.negative_literals:
+                state.negative_literals.append(neg)
 
     def is_relevant(self, state):
         if not self.is_unified(state):
@@ -34,17 +37,23 @@ class Action:
         return True
 
     def is_unified(self, state):
+        #write your code
         for pos in state.positive_literals:
-            for pos2 in self.positive_preconditions:
-                if pos == pos2:
-                    return True
+            if pos in self.add_list:
+                return True
+        for neg in state.negative_literals:
+            if neg in self.delete_list:
+                return True
         return False
 
     def is_conflicting(self, state):
+        #write your code
+        for pos in state.positive_literals:
+            if pos in self.delete_list:
+                return True
         for neg in state.negative_literals:
-            for pod in self.positive_preconditions:
-                if neg ==pod:
-                    return True
+            if neg in self.add_list:
+                return True
         return False
 
     def to_string(self):

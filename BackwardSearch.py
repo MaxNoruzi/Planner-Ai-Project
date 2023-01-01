@@ -1,5 +1,6 @@
 from State import State
 
+
 def backward_search(goal_state, initial_state, actions):
     fringe = [goal_state]
     in_fringe = [goal_state.hash()]
@@ -28,8 +29,6 @@ def get_successors(state, actions):
             successor=State(state,action,state.positive_literals,state.negative_literals)
             action.regress(successor)
             result.append(successor)
-
-
     return result
 
 def goal_test(state, initial_state):

@@ -1,5 +1,6 @@
 from Action import Action
 
+
 def get_actions():
     actions = []
 
