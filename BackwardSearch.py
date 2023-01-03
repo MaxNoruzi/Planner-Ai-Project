@@ -13,7 +13,6 @@ def backward_search(goal_state, initial_state, actions):
         successors = get_successors(current_state, actions)
 
         for successor in successors:
-            #initial goal na goal test
             if goal_test(successor, initial_state):
                 print_solution(successor)
                 return
@@ -21,7 +20,7 @@ def backward_search(goal_state, initial_state, actions):
                 if successor.hash() not in in_fringe and successor.hash() not in explored:
                     fringe.append(successor)
                     in_fringe.append(successor.hash())
-#predeccessor migire
+
 def get_successors(state, actions):
     result = []
     for action in actions:
