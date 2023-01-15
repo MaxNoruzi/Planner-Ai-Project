@@ -8,6 +8,7 @@ def backward_search(goal_state, initial_state, actions):
 
     while fringe:
         current_state = fringe.pop(0)
+        
         in_fringe.pop(0)
         explored.append(current_state.hash())
         successors = get_successors(current_state, actions)
