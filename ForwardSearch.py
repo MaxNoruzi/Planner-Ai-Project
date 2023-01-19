@@ -7,12 +7,14 @@ import heapdict
 def forward_search(goal_state, initial_state, actions):
     # fringe=PriorityQueue()
     fringe =heapdict.heapdict()
-    fringe[initial_state]=0
+    fringe[initial_state]=5000
     in_fringe = [initial_state.hash()]
     explored = []
 
     while fringe:
-        current_state = fringe.popitem()[0]
+        
+        tmp = fringe.popitem()
+        current_state = tmp[0]
         in_fringe.pop(0)
         explored.append(current_state.hash())
         successors = get_successors(current_state, actions)
@@ -26,6 +28,8 @@ def forward_search(goal_state, initial_state, actions):
                     fringe[successor]= ignorePreconditions(actions,successor,goal_state)
                     # fringe.append(successor)
                     in_fringe.append(successor.hash())
+                    
+
 
 
 def get_successors(state, actions):
@@ -55,28 +59,11 @@ def print_solution(state):
     print_solution(state.parent)
     print(state.action.to_string())
     
-def ignoreDeleteList(state):
-    for neg in state.negative_literals:
-        for dell in state.action.delete_list:
-            if(neg==dell):
-                state.action.delete_list.remove(dell)
                 
                 
 def ignorePreconditions(actions,state,goal):
-    st = state
+    st = State(state.parent,state.action,state.positive_literals,state.negative_literals)
     cost =0 
-    # while True:
-        #temp = cost
-        # for act in actions:
-        #     for posact in act.add_list:
-        #         if (posact in actions.goal_state.positive_literals & posact not in goals):
-        #             goals.append(posact)
-        #             cost+=1
-        #             for negact in act.delete_list:
-        #                 if(negact in goals):
-        #                    goals.remove(negact)
-        # if(temp==cost):
-        #     return cost
     for act in actions:
         for poseffect in act.add_list:  
             if(( poseffect not in st.positive_literals) & (poseffect in goal.positive_literals)):
@@ -84,12 +71,17 @@ def ignorePreconditions(actions,state,goal):
                 cost+=1
                 for negeff in act.delete_list:
                     if(negeff in st.positive_literals):
-                        st.positive_literals.remove(negeff)           
-                    
-                    
+                        st.positive_literals.remove(negeff)             
     if (compareList(goal.positive_literals,st.positive_literals)):
-        print("here ", cost)
+        # print("here ", cost)
         return cost 
+    
+def ignoreDeleteList(state,goal):
+    cost=0
+    for p in goal.positive_literals:
+        if p not in state.positive_literals:
+            cost+=1
+    return cost
         
         
 #This method tests for the equality of the lists by comparing frequency of each element
