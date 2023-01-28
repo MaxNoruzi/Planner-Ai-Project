@@ -4,23 +4,68 @@ from Action import Action
 def get_actions():
     actions = []
 
-    # tires = ["spare", "flat"]
-    height=["LOW","HIGH"]
-    locations = ["A", "B","C"]
+    heights = ["LOW", "HIGH"]
+    locations = ["A", "B", "C"]
+    objects = ["Box", "Banana"]
 
-    for loc in locations:
-        for h in height:
-            for loc1 in locations:
-        # put_action = Action(name="put" + tire + "axle", positive_preconditions=["at" + tire + "ground"], \
-        #                       negative_preconditions=["atflataxle", "atspareaxle"], add_list=["at" + tire + "axle"], \
-        #                       delete_list=["at" + tire + "ground"])
-                go_action = Action(name="go" + loc + "Box", positive_preconditions=["at" + loc + "Monkey","Height Monkey ="+height], \
-                                    negative_preconditions=[loc!=loc1], add_list=["at" +  "Monkey" + loc1], \
-                                    delete_list=["not at"  + "Monkey"+ loc])
+    # add actions for moving the monkey
+    for x in locations:
+        for y in locations:
+            if x == y:
+                continue
+
+            go_action = Action(
+                name=f"go{x}{y}",
+                positive_preconditions=[
+                    f"atMonkey{x}", f"heightMonkeyLow", f"notEqual{x}{y}"],
+                negative_preconditions=[],
+                add_list=[f"atMonkey{y}"],
+                delete_list=[f"atMonkey{x}"]
+            )
             actions.append(go_action)
-        for location in locations:
-            remove_action = Action(name="rem" + tire + location, positive_preconditions=["at" + tire + location], \
-                                   negative_preconditions=[], add_list=["at" + tire + "ground"], delete_list=["at" + tire + location])
-            actions.append(remove_action)
+
+    # add actions for pushing the object
+    for x in locations:
+        for y in locations:
+            for obj in objects:
+                if x == y:
+                    continue
+
+                push_action = Action(
+                    name=f"push{obj}{x}{y}",
+                    positive_preconditions=[
+                        f"atMonkey{x}", f"heightMonkeyLow", f"at{obj}{x}", f"pushable{obj}", f"height{obj}Low", f"notEqual{x}{y}"],
+                    negative_preconditions=[],
+                    add_list=[f"at{obj}{y}", f"atMonkey{y}"],
+                    delete_list=[f"at{obj}{x}", f"atMonkey{x}"]
+                )
+                actions.append(push_action)
+
+    # add actions for climbing the object
+    for x in locations:
+        for obj in objects:
+            climb_action = Action(
+                name=f"climbUp{x}{obj}",
+                positive_preconditions=[
+                    f"atMonkey{x}", f"heightMonkeyLow", f"at{obj}{x}", f"climbable{obj}", f"height{obj}Low"],
+                negative_preconditions=[],
+                add_list=[f"onMonkey{obj}", f"heightMonkeyHigh"],
+                delete_list=[f"heightMonkeyLow"]
+            )
+            actions.append(climb_action)
+
+    # add actions for grasping the object
+    for x in locations:
+        for obj in objects:
+            for height in heights:
+                grasp_action = Action(
+                    name=f"grasp{x}{obj}{height}",
+                    positive_preconditions=[
+                        f"atMonkey{x}", f"heightMonkey{height}", f"at{obj}{x}", f"graspable{obj}", f"height{obj}{height}"],
+                    negative_preconditions=[],
+                    add_list=[f"haveMonkey{obj}"],
+                    delete_list=[f"at{obj}{x}", f"height{obj}{height}"]
+                )
+                actions.append(grasp_action)
 
     return actions
