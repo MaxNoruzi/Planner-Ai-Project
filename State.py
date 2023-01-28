@@ -2,6 +2,7 @@ class State:
     def __init__(self, parent, action, positive_literals, negative_literals):
         self.parent = parent
         self.action = action
+        self.heuristic = 0
 
         self.positive_literals = []
         self.negative_literals = []
@@ -11,6 +12,10 @@ class State:
 
         for negative_literal in negative_literals:
             self.negative_literals.append(negative_literal)
+        
+    def __lt__(self, other):
+        return self.heuristic < other.heuristic
+
 
     def to_string(self):
         return f'state, positive literals: {self.positive_literals}, negative literals: {self.negative_literals}'

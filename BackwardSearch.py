@@ -1,5 +1,6 @@
 from State import State
 
+
 def backward_search(goal_state, initial_state, actions):
     fringe = [goal_state]
     in_fringe = [goal_state.hash()]
@@ -12,7 +13,6 @@ def backward_search(goal_state, initial_state, actions):
         successors = get_successors(current_state, actions)
 
         for successor in successors:
-            #initial goal na goal test
             if goal_test(successor, initial_state):
                 print_solution(successor)
                 return
@@ -20,16 +20,14 @@ def backward_search(goal_state, initial_state, actions):
                 if successor.hash() not in in_fringe and successor.hash() not in explored:
                     fringe.append(successor)
                     in_fringe.append(successor.hash())
-#predeccessor migire
+
 def get_successors(state, actions):
     result = []
     for action in actions:
         if action.is_relevant(state):
-            successor=State(state,action,state.positive_literals,state.negative_literals)
+            successor=State(state,state.goal,action,state.positive_literals,state.negative_literals)
             action.regress(successor)
             result.append(successor)
-
-
     return result
 
 def goal_test(state, initial_state):
