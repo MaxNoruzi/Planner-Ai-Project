@@ -12,7 +12,7 @@ def get_actions():
                 continue
             else:
                 drive= Action(name ='drive from' + loc + ' to '+loc1,positive_preconditions=['TruckAt'+loc],\
-                    negative_preconditions=["Not equal"+loc+' '+loc1],add_list=["TruckAt"+loc1],delete_list=["TruckAt"+loc])
+                    negative_preconditions=[],add_list=["TruckAt"+loc1],delete_list=["TruckAt"+loc])
                 actions.append(drive)
 
         for b in boxes:
@@ -24,9 +24,9 @@ def get_actions():
                         lift=Action(name='lift '+b+' to '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
                             bx+"At"+loc,bx+"plate"+p,"clear"+bx],negative_preconditions=[],add_list=[b+"on"+bx,b+"plate"+p],delete_list=[])
                         actions.append(lift)
-
-            drop=Action(name='drop '+b+' from '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
-                b+"plate"+p,"clear"+b],negative_preconditions=[],add_list=[],delete_list=[b+"plate"+p])
+                        drop=Action(name='drop '+b+' from '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
+                            b+"plate"+p,"clear"+b],negative_preconditions=[],add_list=[],delete_list=[b+"plate"+p])
+                        actions.append(drop)
                         
             load=Action(name='load box'+b+' from '+loc,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc, "clear"+b,b+"onfloor"],\
                 negative_preconditions=[],add_list=[b+"onTruck"],delete_list=[b+"onfloor"])
@@ -34,5 +34,5 @@ def get_actions():
                 b+"onTruck"],negative_preconditions=[],add_list=[b+"onfloor"],delete_list=[b+"onTruck"])
             actions.append(load)
             actions.append(unload)
-            actions.append(drop)
+            
     return actions
