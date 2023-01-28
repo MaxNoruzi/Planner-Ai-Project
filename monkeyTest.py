@@ -10,7 +10,7 @@ def main():
 
     print("Planning...")
     positive_literals = ["atMonkeyA", "atBananaB", "atBoxC", "heightMonkeyLow", "heightBoxLow", "heightBananaHigh",
-                         "pushableBox", "climbableBox", "graspableBanana", "notequalAB", "notequalAC", "notequalBA", "notequalBC", "notequalCA", "notequalCB"]
+                         "pushableBox", "climbableBox", "graspableBanana", "notEqualAB", "notEqualAC", "notEqualBA", "notEqualBC", "notEqualCA", "notEqualCB"]
     initial_state = State(
         None, None, positive_literals=positive_literals, negative_literals=[])
 
