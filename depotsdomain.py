@@ -11,8 +11,8 @@ def get_actions():
             if(loc==loc1):
                 continue
             else:
-                drive= Action(name ='drive from' + loc + ' to '+loc1,positive_preconditions=['Truck at '+loc],\
-                    negative_preconditions=["Not equal"+loc+' '+loc1],add_list=["Truck at"+loc1],delete_list=["Truck at"+loc])
+                drive= Action(name ='drive from' + loc + ' to '+loc1,positive_preconditions=['TruckAt'+loc],\
+                    negative_preconditions=["Not equal"+loc+' '+loc1],add_list=["TruckAt"+loc1],delete_list=["TruckAt"+loc])
                 actions.append(drive)
 
         for b in boxes:
@@ -21,17 +21,17 @@ def get_actions():
                     continue
                 else:
                     for p in plates:
-                        lift=Action(name='lift '+b+' to '+p,positive_preconditions=["Truck at"+loc,"Box "+b+"at "+loc,\
-                            bx+" at "+loc,bx+" in plate "+p,"clear on"+bx],negative_preconditions=[],add_list=[b+" on "+bx,b+" in plate "+p],delete_list=[])
+                        lift=Action(name='lift '+b+' to '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
+                            bx+"At"+loc,bx+"plate"+p,"clear"+bx],negative_preconditions=[],add_list=[b+"on"+bx,b+"plate"+p],delete_list=[])
                         actions.append(lift)
 
-            drop=Action(name='drop '+b+' from '+p,positive_preconditions=["Truck at"+loc,"Box "+b+"at "+loc,\
-                b+" in plate "+p,"clear on"+b],negative_preconditions=[],add_list=[],delete_list=[b+" in plate "+p])
+            drop=Action(name='drop '+b+' from '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
+                b+"plate"+p,"clear"+b],negative_preconditions=[],add_list=[],delete_list=[b+"plate"+p])
                         
-            load=Action(name='load box'+b+' from '+loc,positive_preconditions=["Truck at"+loc,"Box "+b+"at "+loc, "clear on "+b,b+" on floor"],\
-                negative_preconditions=[],add_list=[b+" on Truck"],delete_list=[b+" on floor"])
-            unload=Action(name='unload box'+b+' in '+loc,positive_preconditions=["Truck at"+loc,"Box "+b+"at "+loc,\
-                b+" on Truck"],negative_preconditions=[],add_list=[b+" on floor"],delete_list=[b+" on Truck"])
+            load=Action(name='load box'+b+' from '+loc,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc, "clear"+b,b+"onfloor"],\
+                negative_preconditions=[],add_list=[b+"onTruck"],delete_list=[b+"onfloor"])
+            unload=Action(name='unload box'+b+' in '+loc,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
+                b+"onTruck"],negative_preconditions=[],add_list=[b+"onfloor"],delete_list=[b+"onTruck"])
             actions.append(load)
             actions.append(unload)
             actions.append(drop)
