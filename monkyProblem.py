@@ -17,7 +17,7 @@ def get_actions():
             go_action = Action(
                 name=f"go{x}{y}",
                 positive_preconditions=[
-                    f"atMonkey{x}", f"heightMonkeyLow", f"notEqual{x}{y}"],
+                    f"atMonkey{x}", f"heightMonkeyLOW", f"notEqual{x}{y}"],
                 negative_preconditions=[],
                 add_list=[f"atMonkey{y}"],
                 delete_list=[f"atMonkey{x}"]
@@ -34,7 +34,7 @@ def get_actions():
                 push_action = Action(
                     name=f"push{obj}{x}{y}",
                     positive_preconditions=[
-                        f"atMonkey{x}", f"heightMonkeyLow", f"at{obj}{x}", f"pushable{obj}", f"height{obj}Low", f"notEqual{x}{y}"],
+                        f"atMonkey{x}", f"heightMonkeyLOW", f"at{obj}{x}", f"pushable{obj}", f"height{obj}LOW", f"notEqual{x}{y}"],
                     negative_preconditions=[],
                     add_list=[f"at{obj}{y}", f"atMonkey{y}"],
                     delete_list=[f"at{obj}{x}", f"atMonkey{x}"]
@@ -47,10 +47,10 @@ def get_actions():
             climb_action = Action(
                 name=f"climbUp{x}{obj}",
                 positive_preconditions=[
-                    f"atMonkey{x}", f"heightMonkeyLow", f"at{obj}{x}", f"climbable{obj}", f"height{obj}Low"],
+                    f"atMonkey{x}", f"heightMonkeyLOW", f"at{obj}{x}", f"climbable{obj}", f"height{obj}LOW"],
                 negative_preconditions=[],
-                add_list=[f"onMonkey{obj}", f"heightMonkeyHigh"],
-                delete_list=[f"heightMonkeyLow"]
+                add_list=[f"onMonkey{obj}", f"heightMonkeyHIGH"],
+                delete_list=[f"heightMonkeyLOW"]
             )
             actions.append(climb_action)
 
