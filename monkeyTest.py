@@ -18,8 +18,8 @@ def main():
     goal_state = State(
         None, None, positive_literals=goal_literal, negative_literals=[])
 
-    backward_search(goal_state, initial_state, actions)
-    # forward_search(goal_state, initial_state, actions)
+    # backward_search(goal_state, initial_state, actions)
+    forward_search(goal_state, initial_state, actions)
 
 
 if __name__ == "__main__":
