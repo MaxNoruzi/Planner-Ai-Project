@@ -26,7 +26,7 @@ def get_successors(state, actions):
     result = []
     for action in actions:
         if action.is_relevant(state):
-            successor=State(state,state.goal,action,state.positive_literals,state.negative_literals)
+            successor=State(state,action,state.positive_literals,state.negative_literals)
             action.regress(successor)
             result.append(successor)
     return result
