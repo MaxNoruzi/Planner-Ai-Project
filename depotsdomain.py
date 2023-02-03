@@ -22,10 +22,10 @@ def get_actions():
                 else:
                     for p in plates:
                         lift=Action(name='lift '+b+' to '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
-                            bx+"At"+loc,bx+"plate"+p,"clear"+bx],negative_preconditions=[],add_list=[b+"on"+bx,b+"plate"+p],delete_list=[])
+                            bx+"At"+loc,bx+"plate"+p,"clear"+bx,b+"onfloor"],negative_preconditions=[],add_list=[b+"on"+bx,b+"plate"+p],delete_list=["clear"+bx])
                         actions.append(lift)
                         drop=Action(name='drop '+b+' from '+p,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc,\
-                            b+"plate"+p,"clear"+b],negative_preconditions=[],add_list=[],delete_list=[b+"plate"+p])
+                            b+"plate"+p,"clear"+b],negative_preconditions=[],add_list=[b+"onfloor"],delete_list=[b+"plate"+p])
                         actions.append(drop)
                         
             load=Action(name='load box'+b+' from '+loc,positive_preconditions=["TruckAt"+loc,"Box"+b+"At"+loc, "clear"+b,b+"onfloor"],\
